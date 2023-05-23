@@ -29,4 +29,8 @@ public class Contato {
         this.telefone = dados.telefone();
         this.ativo = true;
     }
+
+    public void excluir () {
+        this.ativo = false;
+    }
 }

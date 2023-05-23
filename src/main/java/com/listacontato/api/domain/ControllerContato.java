@@ -7,10 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
@@ -36,4 +33,21 @@ public class ControllerContato {
         var page = repositoryContato.findAllByAtivoTrue(paginacao).map(DadosListagemContato::new);
         return ResponseEntity.ok(page);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id) {
+        var contato = repositoryContato.getReferenceById(id);
+
+        return ResponseEntity.ok(new DadosDetalhamentoContato(contato));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity deletar(@PathVariable Long id) {
+        var contato = repositoryContato.getReferenceById(id);
+        contato.excluir();
+
+        return ResponseEntity.noContent().build();
+    }
+
 }
