@@ -30,6 +30,16 @@ public class Contato {
         this.ativo = true;
     }
 
+
+    public void atualizarContato(DadosAtualizarContato dados) {
+        if(dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if(dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+    }
+
     public void excluir () {
         this.ativo = false;
     }

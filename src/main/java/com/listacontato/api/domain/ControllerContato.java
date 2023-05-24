@@ -1,6 +1,7 @@
 package com.listacontato.api.domain;
 
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +49,15 @@ public class ControllerContato {
         contato.excluir();
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizarContato dados){
+        var contato = repositoryContato.getReferenceById(dados.id());
+        contato.atualizarContato(dados);
+
+        return ResponseEntity.ok(new DadosDetalhamentoContato(contato));
     }
 
 }
